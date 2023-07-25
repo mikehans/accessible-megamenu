@@ -6,6 +6,6 @@ There are three sources on which this mega menu is based:
 
 The mega menu that Kevin Powell creates isn't accessible owing to the hover event being the only method of opening the menu. There is no facility for keyboard only navigation here.
 
-The mega menu on the ACCC website incorporates a button control that can trigger the opening of the mega menu. I am drawing some inspiration for this here.
+The mega menu on the ACCC website incorporates a button control that can trigger the opening of the mega menu. I am drawing some inspiration for this here. Additionally, if the top level menu is clicked the page that the browser navigates to only contains a copy of the links that the mega menu contains. There is no other landing page content.
 
 The W3C ARIA Authoring Practices Guide is not exactly a mega menu but of interest are the keyboard navigation controls in use. 
