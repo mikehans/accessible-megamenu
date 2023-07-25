@@ -1,0 +1,47 @@
+[
+    {
+        "url": "/consumers",
+        "label": "Consumers",
+        "submenu":[
+            {
+                "url": "/consumers1",
+                "label": "Consumers 1"
+            },
+            {
+                "url": "/consumers2",
+                "label": "Consumers 2"
+            },
+            {
+                "url": "/consumers3",
+                "label": "Consumers 3"
+            }
+        ]
+    },
+    {
+        "url": "/business",
+        "label": "Business",
+        "submenu":[
+            {
+                "url": "/business1",
+                "label": "Business 1"
+            },
+            {
+                "url": "/business2",
+                "label": "Business 2"
+            },
+            {
+                "url": "/business3",
+                "label": "Business 3"
+            }
+        ]
+    },
+    {
+        "url": "/by-industry",
+        "label": "By industry"
+    },
+    {
+        "url": "/inquiries-and-consultations",
+        "label": "Inquiries and consultations",
+        "submenu":[]
+    }
+]

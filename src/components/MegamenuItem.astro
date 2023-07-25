@@ -1,0 +1,108 @@
+---
+import MegamenuSubMenu from "./MegamenuSubMenu.astro";
+const { data } = Astro.props;
+---
+
+<li class="listItem">
+  <a href={data.url} class="listItem-anchor">
+    <div>
+      <span>{data.label}</span>
+      <button
+        tabindex="0"
+        class=`listItem-button ${data.submenu && data.submenu.length > 0 ? 'hasSubmenu': ''}`
+      >
+        <span class="sr-only"> Expand this item</span>
+        o
+      </button>
+    </div>
+  </a>
+  {
+    data.submenu && data.submenu.length > 0 && (
+      <div class="sub-menu-container">
+        <MegamenuSubMenu submenu={data.submenu} />
+      </div>
+    )
+  }
+</li>
+
+<style>
+  a {
+    text-decoration: none;
+    color: inherit;
+  }
+
+  a:hover {
+    text-decoration: underline blueviolet;
+  }
+
+  .listItem {
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+    /* border:1px solid red; */
+  }
+
+  .listItem:first-of-type {
+    padding-left: 0;
+  }
+
+  .listItem-anchor {
+    display: flex;
+  }
+
+  .sub-menu-container {
+    display: none;
+  }
+
+  .listItem:hover .sub-menu-container {
+    display: block;
+  }
+
+  .sub-menu-container-visible {
+    display: block;
+  }
+</style>
+
+<script>
+  function toggleSubmenu(buttonEle: HTMLButtonElement) {
+    const parent = buttonEle.closest(".listItem") as HTMLElement;
+    const subMenuDiv = parent.querySelector(
+      ".sub-menu-container"
+    ) as HTMLDivElement;
+    subMenuDiv.classList.toggle("sub-menu-container-visible");
+  }
+
+  function navigateToHref(buttonEle: HTMLButtonElement) {
+    const anchorEle = buttonEle.closest(
+      ".listItem-anchor"
+    ) as HTMLAnchorElement;
+
+    location.assign(anchorEle.href);
+  }
+
+  function closeAllOpenSubmenus(buttonEle: HTMLButtonElement){
+    const menu = buttonEle.closest('.megamenu-top-level');
+    const visibleContainers = menu?.querySelectorAll('.sub-menu-container-visible');
+
+    console.log('visibleContainers', visibleContainers)
+
+    visibleContainers?.forEach(c => c.classList.remove('sub-menu-container-visible'));
+  }
+
+  document.querySelectorAll(".listItem-button").forEach((b) => {
+    b.addEventListener("click", (e) => {
+      console.log("e", e);
+      e.preventDefault();
+      const buttonEle: HTMLButtonElement = e.target as HTMLButtonElement;
+
+      closeAllOpenSubmenus(buttonEle);
+
+      if (buttonEle.classList.contains("hasSubmenu")) {
+        toggleSubmenu(buttonEle);
+      } else {
+        navigateToHref(buttonEle);
+      }
+
+      console.log(e.target);
+    });
+  });
+</script>

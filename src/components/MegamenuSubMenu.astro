@@ -1,0 +1,41 @@
+---
+const { submenu } = Astro.props;
+---
+
+<ul class="subMenu">
+  {
+    submenu &&
+      submenu.map((item) => (
+        <li class="subMenu-listItem">
+          <a href={item.url}>{item.label}</a>
+        </li>
+      ))
+  }
+</ul>
+
+<style>
+  .subMenu {
+    list-style-type: none;
+    position: absolute;
+    left: 0;
+    background-color: #aaa;
+    width: 100%;
+    padding: 1rem;
+    /* padding:0; */
+    display: flex;
+    gap: 1rem;
+  }
+
+  .subMenu-listItem a {
+    text-decoration: none;
+    color: black;
+  }
+
+  .subMenu-listItem a:hover,
+  .subMenu-listItem a:visited
+  {
+    color: black;
+    text-decoration: underline blueviolet;
+  }
+
+</style>

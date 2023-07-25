@@ -1,0 +1,29 @@
+---
+import MegamenuItem from "@components/MegamenuItem.astro";
+
+const { menuData } = Astro.props;
+---
+
+<nav class="megamenu">
+  <ul class="megamenu-top-level">
+    {menuData.map((item) => <MegamenuItem data={item} />)}
+  </ul>
+</nav>
+
+<style>
+  .megamenu {
+    background-color: cadetblue;
+    padding-top: 4px;
+    padding-bottom: 4px;
+
+  }
+
+  .megamenu-top-level {
+    display: flex;
+    list-style-type: none;
+    position: relative;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    margin: 0;
+  }
+</style>
