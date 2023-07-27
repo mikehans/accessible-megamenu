@@ -5,13 +5,13 @@ const { data } = Astro.props;
 const ariaPopUpValue = data.submenu && data.submenu.length > 0 ? true : false;
 ---
 
-<li 
-    class="listItem" 
-    data-menu-item-id=`${data.label}` 
-    role="none" 
-    aria-haspopup=`${ariaPopUpValue}`
-    aria-expanded="false"
-  >
+<li
+  class="listItem"
+  data-menu-item-id=`${data.label}`
+  role="none"
+  aria-haspopup=`${ariaPopUpValue}`
+  aria-expanded="false"
+>
   <a
     href={data.url}
     class="listItem-anchor"
@@ -25,7 +25,7 @@ const ariaPopUpValue = data.submenu && data.submenu.length > 0 ? true : false;
         class=`listItem-button ${data.submenu && data.submenu.length > 0 ? 'hasSubmenu': ''}`
         aria-label=`Expand sub-menu for ${data.label}`
       >
-      V
+        V
       </button>
     </div>
   </a>
@@ -62,6 +62,11 @@ const ariaPopUpValue = data.submenu && data.submenu.length > 0 ? true : false;
     display: flex;
   }
 
+  .listItem-button {
+    background-color: transparent;
+    border: 0;
+  }
+
   .sub-menu-container {
     display: none;
   }
@@ -85,9 +90,13 @@ const ariaPopUpValue = data.submenu && data.submenu.length > 0 ? true : false;
     return subMenuDiv.classList.toggle("sub-menu-container-visible");
   }
 
-  function toggleSubmenuAccessibility(ele: HTMLButtonElement | HTMLLIElement | null, toggleState: boolean): void{
+  function toggleSubmenuAccessibility(
+    ele: HTMLButtonElement | HTMLLIElement | null,
+    toggleState: boolean
+  ): void {
     const parent = ele?.closest(".listItem") as HTMLElement;
-    parent && parent.setAttribute("aria-expanded", toggleState ? "true": "false");
+    parent &&
+      parent.setAttribute("aria-expanded", toggleState ? "true" : "false");
   }
 
   function setOpenItemId(
