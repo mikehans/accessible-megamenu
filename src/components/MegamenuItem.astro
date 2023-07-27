@@ -124,8 +124,8 @@ const { data } = Astro.props;
     })
   }
 
-  document.querySelectorAll(".listItem-button").forEach((b) => {
-    b.addEventListener("click", (e) => {
+  document.querySelectorAll(".listItem-button").forEach((b : Element) => {
+    b.addEventListener("click", (e: Event) => {
       e.preventDefault();
       const buttonEle = e.target as HTMLButtonElement;
       const menuEle = getMenuElement(buttonEle);
