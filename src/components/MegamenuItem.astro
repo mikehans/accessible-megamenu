@@ -3,7 +3,7 @@ import MegamenuSubMenu from "./MegamenuSubMenu.astro";
 const { data } = Astro.props;
 ---
 
-<li class="listItem">
+<li class="listItem" data-menu-item-id=`${data.label}`>
   <a href={data.url} class="listItem-anchor">
     <div>
       <span>{data.label}</span>
@@ -63,15 +63,46 @@ const { data } = Astro.props;
 </style>
 
 <script>
-  function toggleSubmenu(buttonEle: HTMLButtonElement) {
+  function toggleSubmenu(buttonEle: HTMLButtonElement): boolean {
     const parent = buttonEle.closest(".listItem") as HTMLElement;
     const subMenuDiv = parent.querySelector(
       ".sub-menu-container"
     ) as HTMLDivElement;
-    subMenuDiv.classList.toggle("sub-menu-container-visible");
+
+    return subMenuDiv.classList.toggle("sub-menu-container-visible");
   }
 
-  function navigateToHref(buttonEle: HTMLButtonElement) {
+  function setOpenItemId(
+    buttonEle: HTMLButtonElement,
+    menuEle: HTMLUListElement
+  ): void {
+    const selectedMenuItem = buttonEle?.closest(".listItem") as HTMLElement;
+    const selectedMenuItemId = selectedMenuItem.dataset.menuItemId;
+
+    menuEle.dataset.openItemId = selectedMenuItemId;
+  }
+
+  function unsetOpenItemId(menuEle: HTMLUListElement): void {
+    menuEle.dataset.openItemId = "";
+  }
+
+  function getOpenItemId(menuEle: HTMLUListElement): string {
+    return menuEle?.dataset.openItemId || "";
+  }
+
+  function getListItem(ele: HTMLElement): HTMLUListElement | null  {
+    return ele.closest(".listItem");
+  }
+
+  function getMenuElement(buttonEle: HTMLButtonElement): HTMLUListElement {
+    const menuEle = buttonEle.closest(
+      ".megamenu-top-level"
+    ) as HTMLUListElement;
+
+    return menuEle;
+  }
+
+  function navigateToHref(buttonEle: HTMLButtonElement): void {
     const anchorEle = buttonEle.closest(
       ".listItem-anchor"
     ) as HTMLAnchorElement;
@@ -79,30 +110,40 @@ const { data } = Astro.props;
     location.assign(anchorEle.href);
   }
 
-  function closeAllOpenSubmenus(buttonEle: HTMLButtonElement){
-    const menu = buttonEle.closest('.megamenu-top-level');
-    const visibleContainers = menu?.querySelectorAll('.sub-menu-container-visible');
+  function closeNonCurrentMenus(menuEle: HTMLUListElement): void {
+    const currentlyOpenItemId = menuEle.dataset.openItemId;
 
-    console.log('visibleContainers', visibleContainers)
+    const openSubmenus = menuEle.querySelectorAll(".sub-menu-container-visible");
 
-    visibleContainers?.forEach(c => c.classList.remove('sub-menu-container-visible'));
+    openSubmenus.forEach((ele: Element) => {
+      const listItem  = getListItem(ele as HTMLUListElement);
+
+      if(listItem?.dataset.menuItemId !== currentlyOpenItemId){
+        ele.classList.remove("sub-menu-container-visible");
+      }
+    })
   }
 
   document.querySelectorAll(".listItem-button").forEach((b) => {
     b.addEventListener("click", (e) => {
-      console.log("e", e);
       e.preventDefault();
-      const buttonEle: HTMLButtonElement = e.target as HTMLButtonElement;
-
-      closeAllOpenSubmenus(buttonEle);
+      const buttonEle = e.target as HTMLButtonElement;
+      const menuEle = getMenuElement(buttonEle);
+      const currentlyOpenItemBefore = getOpenItemId(menuEle);
+      console.log('currentlyOpenItemBefore', currentlyOpenItemBefore);
 
       if (buttonEle.classList.contains("hasSubmenu")) {
-        toggleSubmenu(buttonEle);
+        const isSet = toggleSubmenu(buttonEle);
+        isSet ? setOpenItemId(buttonEle, menuEle) : unsetOpenItemId(menuEle);
       } else {
         navigateToHref(buttonEle);
       }
 
-      console.log(e.target);
+      const currentlyOpenItemAfter = getOpenItemId(menuEle);
+      console.log('currentlyOpenItemAfter', currentlyOpenItemAfter);
+
+      // close menus that are not the current one here
+      closeNonCurrentMenus(menuEle);
     });
   });
 </script>

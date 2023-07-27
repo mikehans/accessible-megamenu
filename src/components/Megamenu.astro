@@ -5,7 +5,7 @@ const { menuData } = Astro.props;
 ---
 
 <nav class="megamenu">
-  <ul class="megamenu-top-level">
+  <ul class="megamenu-top-level" data-open-item-id="">
     {menuData.map((item) => <MegamenuItem data={item} />)}
   </ul>
 </nav>
