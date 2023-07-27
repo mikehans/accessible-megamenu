@@ -1,18 +1,31 @@
 ---
 import MegamenuSubMenu from "./MegamenuSubMenu.astro";
 const { data } = Astro.props;
+
+const ariaPopUpValue = data.submenu && data.submenu.length > 0 ? true : false;
 ---
 
-<li class="listItem" data-menu-item-id=`${data.label}`>
-  <a href={data.url} class="listItem-anchor">
+<li 
+    class="listItem" 
+    data-menu-item-id=`${data.label}` 
+    role="none" 
+    aria-haspopup=`${ariaPopUpValue}`
+    aria-expanded="false"
+  >
+  <a
+    href={data.url}
+    class="listItem-anchor"
+    role="menuitem"
+    aria-label={data.label}
+  >
     <div>
       <span>{data.label}</span>
       <button
         tabindex="0"
         class=`listItem-button ${data.submenu && data.submenu.length > 0 ? 'hasSubmenu': ''}`
+        aria-label=`Expand sub-menu for ${data.label}`
       >
-        <span class="sr-only"> Expand this item</span>
-        o
+      V
       </button>
     </div>
   </a>
@@ -72,6 +85,11 @@ const { data } = Astro.props;
     return subMenuDiv.classList.toggle("sub-menu-container-visible");
   }
 
+  function toggleSubmenuAccessibility(ele: HTMLButtonElement | HTMLLIElement | null, toggleState: boolean): void{
+    const parent = ele?.closest(".listItem") as HTMLElement;
+    parent && parent.setAttribute("aria-expanded", toggleState ? "true": "false");
+  }
+
   function setOpenItemId(
     buttonEle: HTMLButtonElement,
     menuEle: HTMLUListElement
@@ -90,7 +108,7 @@ const { data } = Astro.props;
     return menuEle?.dataset.openItemId || "";
   }
 
-  function getListItem(ele: HTMLElement): HTMLUListElement | null  {
+  function getListItem(ele: HTMLElement): HTMLLIElement | null {
     return ele.closest(".listItem");
   }
 
@@ -113,34 +131,38 @@ const { data } = Astro.props;
   function closeNonCurrentMenus(menuEle: HTMLUListElement): void {
     const currentlyOpenItemId = menuEle.dataset.openItemId;
 
-    const openSubmenus = menuEle.querySelectorAll(".sub-menu-container-visible");
+    const openSubmenus = menuEle.querySelectorAll(
+      ".sub-menu-container-visible"
+    );
 
     openSubmenus.forEach((ele: Element) => {
-      const listItem  = getListItem(ele as HTMLUListElement);
+      const listItem = getListItem(ele as HTMLUListElement);
 
-      if(listItem?.dataset.menuItemId !== currentlyOpenItemId){
+      if (listItem?.dataset.menuItemId !== currentlyOpenItemId) {
         ele.classList.remove("sub-menu-container-visible");
+        toggleSubmenuAccessibility(listItem, false);
       }
-    })
+    });
   }
 
-  document.querySelectorAll(".listItem-button").forEach((b : Element) => {
+  document.querySelectorAll(".listItem-button").forEach((b: Element) => {
     b.addEventListener("click", (e: Event) => {
       e.preventDefault();
       const buttonEle = e.target as HTMLButtonElement;
       const menuEle = getMenuElement(buttonEle);
       const currentlyOpenItemBefore = getOpenItemId(menuEle);
-      console.log('currentlyOpenItemBefore', currentlyOpenItemBefore);
+      console.log("currentlyOpenItemBefore", currentlyOpenItemBefore);
 
       if (buttonEle.classList.contains("hasSubmenu")) {
         const isSet = toggleSubmenu(buttonEle);
         isSet ? setOpenItemId(buttonEle, menuEle) : unsetOpenItemId(menuEle);
+        toggleSubmenuAccessibility(buttonEle, isSet);
       } else {
         navigateToHref(buttonEle);
       }
 
       const currentlyOpenItemAfter = getOpenItemId(menuEle);
-      console.log('currentlyOpenItemAfter', currentlyOpenItemAfter);
+      console.log("currentlyOpenItemAfter", currentlyOpenItemAfter);
 
       // close menus that are not the current one here
       closeNonCurrentMenus(menuEle);

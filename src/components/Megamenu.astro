@@ -4,8 +4,8 @@ import MegamenuItem from "@components/MegamenuItem.astro";
 const { menuData } = Astro.props;
 ---
 
-<nav class="megamenu">
-  <ul class="megamenu-top-level" data-open-item-id="">
+<nav class="megamenu" aria-label="Main menu">
+  <ul class="megamenu-top-level" data-open-item-id="" role="menubar">
     {menuData.map((item) => <MegamenuItem data={item} />)}
   </ul>
 </nav>

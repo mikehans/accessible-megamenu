@@ -1,21 +1,20 @@
 ---
-import Megamenu from "@components/Megamenu.astro";  
+import Megamenu from "@components/Megamenu.astro";
 import "@styles/global.css";
 import menudata from "../menudata.json";
-
 ---
 
 <html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<Megamenu menuData={menudata} />
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="generator" content={Astro.generator} />
+    <title>Astro</title>
+  </head>
+  <body>
+    <Megamenu menuData={menudata} />
 
-		<h1>Astro</h1>
-	</body>
+    <h1>Astro</h1>
+  </body>
 </html>

@@ -2,12 +2,12 @@
 const { submenu } = Astro.props;
 ---
 
-<ul class="subMenu">
+<ul class="subMenu" role="menu">
   {
     submenu &&
       submenu.map((item) => (
         <li class="subMenu-listItem">
-          <a href={item.url}>{item.label}</a>
+          <a href={item.url} role="menuitem">{item.label}</a>
         </li>
       ))
   }
