@@ -154,27 +154,117 @@ const ariaPopUpValue = data.submenu && data.submenu.length > 0 ? true : false;
     });
   }
 
+  function buttonClickEventHandler(
+    buttonEle: HTMLButtonElement,
+    menuEle: HTMLUListElement
+  ): void {
+    const currentlyOpenItemBefore = getOpenItemId(menuEle);
+    console.log("currentlyOpenItemBefore", currentlyOpenItemBefore);
+
+    if (buttonEle.classList.contains("hasSubmenu")) {
+      const isSet = toggleSubmenu(buttonEle);
+      isSet ? setOpenItemId(buttonEle, menuEle) : unsetOpenItemId(menuEle);
+      toggleSubmenuAccessibility(buttonEle, isSet);
+    } else {
+      navigateToHref(buttonEle);
+    }
+
+    const currentlyOpenItemAfter = getOpenItemId(menuEle);
+    console.log("currentlyOpenItemAfter", currentlyOpenItemAfter);
+
+    // close menus that are not the current one here
+    closeNonCurrentMenus(menuEle);
+  }
+
   document.querySelectorAll(".listItem-button").forEach((b: Element) => {
     b.addEventListener("click", (e: Event) => {
       e.preventDefault();
       const buttonEle = e.target as HTMLButtonElement;
       const menuEle = getMenuElement(buttonEle);
-      const currentlyOpenItemBefore = getOpenItemId(menuEle);
-      console.log("currentlyOpenItemBefore", currentlyOpenItemBefore);
 
-      if (buttonEle.classList.contains("hasSubmenu")) {
-        const isSet = toggleSubmenu(buttonEle);
-        isSet ? setOpenItemId(buttonEle, menuEle) : unsetOpenItemId(menuEle);
-        toggleSubmenuAccessibility(buttonEle, isSet);
-      } else {
-        navigateToHref(buttonEle);
-      }
-
-      const currentlyOpenItemAfter = getOpenItemId(menuEle);
-      console.log("currentlyOpenItemAfter", currentlyOpenItemAfter);
-
-      // close menus that are not the current one here
-      closeNonCurrentMenus(menuEle);
+      buttonClickEventHandler(buttonEle, menuEle);
     });
   });
+
+  document
+    .querySelectorAll(".megamenu-top-level .listItem")
+    ?.forEach((ele: Element) => {
+      ele.addEventListener("keydown", (e: Event) => {
+        const kbdEvt = e as KeyboardEvent;
+
+        console.log("kbdEvt .listItem", kbdEvt);
+
+        switch (kbdEvt.key) {
+          case " ":
+            if (
+              (e.target as HTMLElement)?.classList.contains("listItem-button")
+            ) {
+              e.preventDefault();
+              const buttonEle = e.target as HTMLButtonElement;
+              const menuEle = getMenuElement(buttonEle);
+              buttonClickEventHandler(buttonEle, menuEle);
+            }
+            break;
+          case "ArrowLeft":
+            console.group("ArrowLeft");
+
+            var prev = ele.previousElementSibling as HTMLElement;
+            console.log("prev", prev);
+            if (prev) {
+              var a = prev.querySelector("[role=menuitem]") as HTMLElement;
+              a.focus();
+            }
+            console.groupEnd();
+
+            break;
+          case "ArrowRight":
+            console.group("ArrowRight");
+
+            var next = ele.nextElementSibling as HTMLElement;
+            console.log("next", next);
+            if (next != null) {
+              var a = next.querySelector("[role=menuitem]") as HTMLElement;
+              a.focus();
+            }
+            console.groupEnd();
+            break;
+          case "ArrowUp":
+            console.group("ArrowUp");
+            console.log("aria-expanded", ele.getAttribute("aria-expanded"));
+            if (
+              (e.target as HTMLElement)?.classList.contains(
+                "listItem-button"
+              ) &&
+              ele.getAttribute("aria-expanded") == "true"
+            ) {
+              e.preventDefault();
+              const buttonEle = e.target as HTMLButtonElement;
+              const menuEle = getMenuElement(buttonEle);
+              buttonClickEventHandler(buttonEle, menuEle);
+            }
+            console.groupEnd();
+            break;
+          case "ArrowDown":
+            console.group("ArrowDown");
+            console.log("e.target", e.target);
+            if (
+              (e.target as HTMLElement)?.classList.contains(
+                "listItem-button"
+              ) &&
+              (e.target as HTMLElement)?.classList.contains("hasSubmenu") &&
+              ele.getAttribute("aria-expanded") == "true"
+            ) {
+              e.preventDefault();
+              const submenu = ele.querySelector(".subMenu");
+              const firstMenuItem = submenu?.querySelector(
+                "[role=menuitem"
+              ) as HTMLElement;
+              console.log("firstMenuItem", firstMenuItem);
+              firstMenuItem.focus();
+            }
+            console.groupEnd();
+            break;
+        }
+      });
+    });
 </script>

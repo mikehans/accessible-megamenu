@@ -16,5 +16,13 @@ import menudata from "../menudata.json";
     <Megamenu menuData={menudata} />
 
     <h1>Astro</h1>
+
+    <input type="text" name="testme" id="testme">
   </body>
 </html>
+
+<script>
+  document.querySelector("#testme")?.addEventListener('keydown', e =>{
+    console.log('input keydown', e);
+  })
+</script>

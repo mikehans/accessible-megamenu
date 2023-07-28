@@ -7,7 +7,9 @@ const { submenu } = Astro.props;
     submenu &&
       submenu.map((item) => (
         <li class="subMenu-listItem">
-          <a href={item.url} role="menuitem">{item.label}</a>
+          <a href={item.url} role="menuitem">
+            {item.label}
+          </a>
         </li>
       ))
   }
@@ -32,10 +34,59 @@ const { submenu } = Astro.props;
   }
 
   .subMenu-listItem a:hover,
-  .subMenu-listItem a:visited
-  {
+  .subMenu-listItem a:visited {
     color: black;
     text-decoration: underline blueviolet;
   }
-
 </style>
+
+<script>
+  document
+    .querySelectorAll(".megamenu-top-level .subMenu-listItem")
+    .forEach((ele: Element) => {
+      ele.addEventListener("keydown", (k: Event) => {
+        k.stopPropagation();
+        const kbdEvt = k as KeyboardEvent;
+        console.log("kbdEvt .subMenu-listItem", kbdEvt);
+
+        switch (kbdEvt.key) {
+          case "ArrowLeft":
+            console.group("ArrowLeft");
+
+            var prev = ele.previousElementSibling as HTMLElement;
+            console.log("prev", prev);
+            if (prev) {
+              var a = prev.querySelector("[role=menuitem]") as HTMLElement;
+              a.focus();
+            }
+            console.groupEnd();
+            break;
+          case "ArrowRight":
+            console.group("ArrowRight");
+
+            var next = ele.nextElementSibling as HTMLElement;
+            console.log("next", next);
+            if (next != null) {
+              var a = next.querySelector("[role=menuitem]") as HTMLElement;
+              a.focus();
+            }
+            console.groupEnd();
+            break;
+          case "ArrowUp":
+            console.group("ArrowUp");
+            console.log('kbdEvt.key ', kbdEvt.key );
+            console.log('ele', ele);
+
+            const item = kbdEvt.target as HTMLElement;
+            const topLevelLi = item.closest('.listItem');
+
+            const btn = topLevelLi?.querySelector(".listItem-button") as HTMLElement;
+            btn.focus();
+            console.groupEnd();
+            break;
+          case "ArrowDown":
+            break;
+        }
+      });
+    });
+</script>
