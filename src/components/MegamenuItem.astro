@@ -81,6 +81,7 @@ const ariaPopUpValue = data.submenu && data.submenu.length > 0 ? true : false;
 </style>
 
 <script>
+  import { menuItemArrowLeft, menuItemArrowRight } from "../js/arrowEvents";
   function toggleSubmenu(buttonEle: HTMLButtonElement): boolean {
     const parent = buttonEle.closest(".listItem") as HTMLElement;
     const subMenuDiv = parent.querySelector(
@@ -206,27 +207,10 @@ const ariaPopUpValue = data.submenu && data.submenu.length > 0 ? true : false;
             }
             break;
           case "ArrowLeft":
-            console.group("ArrowLeft");
-
-            var prev = ele.previousElementSibling as HTMLElement;
-            console.log("prev", prev);
-            if (prev) {
-              var a = prev.querySelector("[role=menuitem]") as HTMLElement;
-              a.focus();
-            }
-            console.groupEnd();
-
+            menuItemArrowLeft(ele);
             break;
           case "ArrowRight":
-            console.group("ArrowRight");
-
-            var next = ele.nextElementSibling as HTMLElement;
-            console.log("next", next);
-            if (next != null) {
-              var a = next.querySelector("[role=menuitem]") as HTMLElement;
-              a.focus();
-            }
-            console.groupEnd();
+            menuItemArrowRight(ele);
             break;
           case "ArrowUp":
             console.group("ArrowUp");

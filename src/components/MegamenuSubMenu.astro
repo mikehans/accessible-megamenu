@@ -41,6 +41,7 @@ const { submenu } = Astro.props;
 </style>
 
 <script>
+  import { menuItemArrowLeft, menuItemArrowRight } from "../js/arrowEvents";
   document
     .querySelectorAll(".megamenu-top-level .subMenu-listItem")
     .forEach((ele: Element) => {
@@ -51,25 +52,10 @@ const { submenu } = Astro.props;
 
         switch (kbdEvt.key) {
           case "ArrowLeft":
-            console.group("ArrowLeft");
-
-            var prev = ele.previousElementSibling as HTMLElement;
-            console.log("prev", prev);
-            if (prev) {
-              var a = prev.querySelector("[role=menuitem]") as HTMLElement;
-              a.focus();
-            }
-            console.groupEnd();
+            menuItemArrowLeft(ele);
             break;
           case "ArrowRight":
-            console.group("ArrowRight");
-
-            var next = ele.nextElementSibling as HTMLElement;
-            console.log("next", next);
-            if (next != null) {
-              var a = next.querySelector("[role=menuitem]") as HTMLElement;
-              a.focus();
-            }
+            menuItemArrowRight(ele);
             console.groupEnd();
             break;
           case "ArrowUp":
