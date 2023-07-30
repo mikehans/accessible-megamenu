@@ -1,47 +1,127 @@
 [
-    {
-        "url": "/consumers",
-        "label": "Consumers",
-        "submenu":[
-            {
-                "url": "/consumers1",
-                "label": "Consumers 1"
-            },
-            {
-                "url": "/consumers2",
-                "label": "Consumers 2"
-            },
-            {
-                "url": "/consumers3",
-                "label": "Consumers 3"
-            }
-        ]
-    },
-    {
-        "url": "/business",
-        "label": "Business",
-        "submenu":[
-            {
-                "url": "/business1",
-                "label": "Business 1"
-            },
-            {
-                "url": "/business2",
-                "label": "Business 2"
-            },
-            {
-                "url": "/business3",
-                "label": "Business 3"
-            }
-        ]
-    },
-    {
-        "url": "/by-industry",
-        "label": "By industry"
-    },
-    {
-        "url": "/inquiries-and-consultations",
-        "label": "Inquiries and consultations",
-        "submenu":[]
-    }
+  {
+    "url": "/",
+    "label": "Home"
+  },
+  {
+    "url": "/tools",
+    "label": "Tools",
+    "image": "tools-megamenu.jpg",
+    "submenu": [
+      {
+        "url": "/tools/hand-tools",
+        "label": "Hand tools"
+      },
+      {
+        "url": "/tools/power-tools",
+        "label": "Power Tools"
+      },
+      {
+        "url": "/tools/tool-storage",
+        "label": "Tool Storage"
+      }
+    ]
+  },
+  {
+    "url": "/garden",
+    "label": "Garden",
+    "image": "garden-megamenu.jpg",
+    "submenu": [
+      {
+        "url": "/garden/garden-decor",
+        "label": "Garden Decor and Features"
+      },
+      {
+        "url": "/garden/letterboxes",
+        "label": "Letterboxes"
+      },
+      {
+        "url": "/garden/gardening",
+        "label": "Garden Supplies and Maintenance"
+      },
+      {
+        "url": "/garden/clothing",
+        "label": "Garden Clothing and Safety Gear"
+      },
+      {
+        "url": "/garden/tools",
+        "label": "Garden Tools"
+      },
+      {
+        "url": "/garden/landscaping",
+        "label": "Landscaping Supplies"
+      },
+      {
+        "url": "/garden/lawn",
+        "label": "Grass and Lawn Care"
+      },
+      {
+        "url": "/garden/sheds",
+        "label": "Sheds"
+      },
+      {
+        "url": "/garden/pest-control",
+        "label": "Pest Control"
+      },
+      {
+        "url": "/garden/plants",
+        "label": "Plants"
+      },
+      {
+        "url": "/garden/seeds-propagation",
+        "label": "Seeds and Propagation"
+      },
+      {
+        "url": "/garden/pots-planters-baskets",
+        "label": "Plant Pots Planters and Baskets"
+      },
+      {
+        "url": "/garden/sprinklers-irrigation",
+        "label": "Water Sprinklers and Irrigation Supplies"
+      }
+    ]
+  },
+  {
+    "url": "/kitchen",
+    "label": "Kitchen",
+    "image": "kitchen-megamenu.jpg",
+    "submenu": [
+      {
+        "url": "/kitchen/appliances",
+        "label": "Kitchen Appliances"
+      },
+      {
+        "url": "/kitchen/benchtops",
+        "label": "Benchtops"
+      },
+      {
+        "url": "/kitchen/cabinets-pantries",
+        "label": "Cabinets and Pantries"
+      },
+      {
+        "url": "/kitchen/taps-sinks",
+        "label": "Taps and Sinks"
+      },
+      {
+        "url": "/kitchen/splashbacks",
+        "label": "Splashbacks"
+      },
+      {
+        "url": "/kitchen/kitchenware",
+        "label": "Kitchenware"
+      },
+      {
+        "url": "/kitchen/small-appliances",
+        "label": "Small Appliances"
+      },
+      {
+        "url": "/kitchen/tableware",
+        "label": "Tableware"
+      },
+      {
+        "url": "/kitchen/inspiration",
+        "label": "Kitchen Inspiration"
+      }
+    ]
+  }
 ]

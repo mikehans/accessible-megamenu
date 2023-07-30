@@ -22,7 +22,7 @@ const ariaPopUpValue = data.submenu && data.submenu.length > 0 ? true : false;
       <span>{data.label}</span>
       <button
         tabindex="0"
-        class=`listItem-button ${data.submenu && data.submenu.length > 0 ? 'hasSubmenu': ''}`
+        class=`listItem-button ${data.submenu && data.submenu.length > 0 ? 'hasSubmenu': 'isHidden'}`
         aria-label=`Expand sub-menu for ${data.label}`
       >
         V
@@ -32,7 +32,10 @@ const ariaPopUpValue = data.submenu && data.submenu.length > 0 ? true : false;
   {
     data.submenu && data.submenu.length > 0 && (
       <div class="sub-menu-container">
-        <MegamenuSubMenu submenu={data.submenu} />
+        <div class="sub-menu-display-container">
+          <img src=`/images/${data.image}` class="sub-menu-image" alt="" />
+          <MegamenuSubMenu submenu={data.submenu} />
+        </div>
       </div>
     )
   }
@@ -51,7 +54,6 @@ const ariaPopUpValue = data.submenu && data.submenu.length > 0 ? true : false;
   .listItem {
     padding-left: 0.5rem;
     padding-right: 0.5rem;
-    /* border:1px solid red; */
   }
 
   .listItem:first-of-type {
@@ -67,8 +69,27 @@ const ariaPopUpValue = data.submenu && data.submenu.length > 0 ? true : false;
     border: 0;
   }
 
+  .listItem-button.isHidden {
+    display: none
+  }
   .sub-menu-container {
     display: none;
+  }
+
+  .sub-menu-display-container{
+    background-color: #aaa;
+    position: absolute;
+    left: 0;
+    width: 100%;
+    max-height: 480px;
+    display:flex;
+    padding-top: 1rem;
+    padding-left:4rem;
+    padding-bottom: 1rem;
+  }
+
+  .sub-menu-image{
+    max-height: 480px;
   }
 
   .listItem:hover .sub-menu-container {
